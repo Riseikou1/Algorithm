@@ -18,10 +18,10 @@ void merge(int a[], int left, int mid, int right){
             a[k++] = tmp[j++];
         }
     }
-    while(i <= mid && k<=right){
+    while(i <= mid){
         a[k++] = tmp[i++];
     }
-    while(j <=right && k<=right){
+    while(j <=right){
         a[k++] = tmp[j++];
     }
 
@@ -44,7 +44,7 @@ void iter_mergeSort(int v[], int n){  // bottom up.
         for(int i = 0;i < n; i += 2*size){  // starting indices also will be increased by 2 times size, since that will be the next starting point. 
             int low = i;
             int mid = low + size - 1;
-            int high = min(i + 2 * size - 1, n -1);
+            int high = min(i + 2 * size - 1, n - 1);
             if(mid >= n - 1) break;  // mid equals last idx means, there is only one element.
             merge(v, low, mid, high);
         }
@@ -54,8 +54,8 @@ void iter_mergeSort(int v[], int n){  // bottom up.
 
 int main(){
     int temuujin[maxsize] = {5, 6, 9, 3, 5,2, 1, 3, 5, 8, 9, 6, 3, 1};
-    int idx_size = sizeof(temuujin)/sizeof(temuujin[0]) - 1;
-    mergeSort(temuujin, 0, idx_size);
+    int idx_size = sizeof(temuujin)/sizeof(temuujin[0]);
+    mergeSort(temuujin, 0, idx_size - 1);
     //iter_mergeSort(temuujin, idx_size);
     for(int num : temuujin){
         if(num == 0) continue;
