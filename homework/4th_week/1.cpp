@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 int tile_id = 1;
 
 void tile(vector<vector<int>>& board, int row, int col, int size,

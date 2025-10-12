@@ -28,7 +28,7 @@ int countCoinExchange(int coins[], int numDiffCoins, int change) {
 
 int main() {
     int coins[] = {1, 2, 3, 5};
-    int numDiffCoins = 4;
+    int numDiffCoins = 3;
     int change = 7;
 
     cout << "Number of ways: "  // stupid asshole shit.
