@@ -2,16 +2,11 @@
 using namespace std;
 
 struct Node {
-    int key;
-    int cnt;   
-    int sz;    
-    Node* left;
-    Node* right;
+    int key, cnt, sz;    
+    Node* left, *right;
 
-    Node(int key, Node* left = nullptr, Node* right = nullptr)
-        : key(key), cnt(1), sz(1), left(left), right(right) {}
+    Node(int key, Node* left = nullptr, Node* right = nullptr) : key(key), cnt(1), sz(1), left(left), right(right) {}
 };
-
 
 int GetSize(Node* x) {
     return x ? x->sz : 0;
@@ -28,7 +23,6 @@ void DestroySplayTree(Node* root) {
     DestroySplayTree(root->right);
     delete root;
 }
-
 
 Node* Zig(Node* y) {
     Node* x = y->left;
@@ -48,32 +42,39 @@ Node* Zag(Node* x) {
     return y;
 }
 
-
 Node* Splay(Node* t, int key) {
     if (!t) return nullptr;
-    if (key == t->key) return t;
 
     if (key < t->key) {
         if (!t->left) return t;
+
         if (key < t->left->key) {
             t->left->left = Splay(t->left->left, key);
             t = Zig(t);
-        } else if (key > t->left->key) {
+        } 
+        else if (key > t->left->key) {
             t->left->right = Splay(t->left->right, key);
-            if (t->left->right) t = Zig(t);
+            if (t->left->right) t->left = Zag(t->left);
         }
-        return t->left ? Zig(t) : t;
-    } else {
+
+        return (t->left ? Zig(t) : t);
+    } 
+    else if (key > t->key) {
         if (!t->right) return t;
+
         if (key > t->right->key) {
             t->right->right = Splay(t->right->right, key);
             t = Zag(t);
-        } else if (key < t->right->key) {
+        } 
+        else if (key < t->right->key) {
             t->right->left = Splay(t->right->left, key);
-            if (t->right->left) t = Zag(t);
+            if (t->right->left) t->right = Zig(t->right);
         }
-        return t->right ? Zag(t) : t;
-    }
+
+        return (t->right ? Zag(t) : t);
+    } 
+
+    return t;
 }
 
 
@@ -102,7 +103,6 @@ Node* Insert(Node* root, int key) {
     return n;
 }
 
-
 Node* Delete(Node* root, int key) {
     if (!root) return nullptr;
     root = Splay(root, key);
@@ -126,7 +126,6 @@ Node* Delete(Node* root, int key) {
     return res;
 }
 
-
 int Order(Node* t, int k) {
     if (!t || k <= 0 || k > GetSize(t)) return -1;
 
@@ -136,29 +135,19 @@ int Order(Node* t, int k) {
     return Order(t->right, k - leftSize - t->cnt);
 }
 
-
 int OrderOfKey(Node* t, int x) {
     if (!t) return 0;
-    if (x <= t->key)
-        return OrderOfKey(t->left, x);
-    else
-        return GetSize(t->left) + t->cnt + OrderOfKey(t->right, x);
+    if (x <= t->key) return OrderOfKey(t->left, x);
+    else             return GetSize(t->left) + t->cnt + OrderOfKey(t->right, x);
 }
 
-
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int T;
-    cin >> T;
-    while (T--) {
-        int q;
-        cin >> q;
+    int temu; cin >> temu;
+    while (temu--) {
+        int q; cin >> q;
         Node* root = nullptr;
         for (int i = 0; i < q; i++) {
-            int op, x;
-            cin >> op >> x;
+            int op, x; cin >> op >> x;
             if (op == 1) root = Insert(root, x);
             else if (op == 2) root = Delete(root, x);
             else if (op == 3) cout << Order(root, x) << "\n";
