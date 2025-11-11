@@ -13,7 +13,6 @@ void Hanoi(int n, int from, int using_peg, int to) {
     // Move the largest disk from 'from' to 'to'.
     move(from, to);
     
-    // Move the n-1 disks from 'using_peg' to 'to', using 'from' as the auxiliary.
     Hanoi(n - 1, using_peg, from, to);
 }
 int main() {

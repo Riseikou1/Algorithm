@@ -15,6 +15,7 @@ int partition(int v[], int low, int high){
             tmp = v[i];
             v[i] = v[j];
             v[j] = tmp;
+            
             i++;
         }
         j++;
